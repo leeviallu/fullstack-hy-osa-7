@@ -19,24 +19,27 @@ const useCountry = (name) => {
   const [country, setCountry] = useState(null)
   useEffect(() => {
       const fetchCountries = async () => {
+        if (!(name === '')) {
           try {
-            if (!(name === '')) {
               const response = await axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true
-              `)
+                `)
+              console.log('d',response)
+              if(!response) {
+                throw new Error()
+              }
               const countriesData = response.data[0]
               const foundData = {
                 ...countriesData,
                 found: true,
               }
               setCountry(foundData)
-            } 
           }
           catch (error) {
-                setCountry({
-                  name,
-                  found: false,
-                })
+            if(error.code === 'ERR_BAD_REQUEST') {
+              console.error(error.code, ': Wrong country name')
+            }
           }
+        }
       }
       fetchCountries()
   }, [name])
