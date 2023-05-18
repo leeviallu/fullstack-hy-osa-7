@@ -58,12 +58,11 @@ const App = () => {
 
   const addBlogLikes = async (id, blogObject) => {
     dispatch(modifyBlog(id, blogObject))
-    dispatch(initializeBlogs())
   }
 
   const deleteBlog = async (id) => {
     dispatch(removeBlog(id))
-    dispatch(initializeBlogs())
+    window.location.reload()
   }
 
   const blogFormRef = useRef()

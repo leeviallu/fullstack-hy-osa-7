@@ -14,10 +14,10 @@ const blogSlice = createSlice({
         },
         updateInterface(state, action) {
             const updatedState = state.map(blog => {
-              if (blog.id === action.payload.id) {
-                return action.payload
-              }
-              return blog
+                if (blog.id === action.payload.id) {
+                    return action.payload
+                }
+                return blog
             })
             return updatedState
         },
