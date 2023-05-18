@@ -10,13 +10,11 @@ const Blog = ({ blog, updateBlog, deleteBlog, user }) => {
     marginBottom: 5
   }
 
-  const addBlogLikes = (event) => {
-    event.preventDefault()
-    const addLike = blog.likes + 1
+  const addBlogLikes = () => {
     updateBlog(blog.id,
       {
         ...blog,
-        likes: addLike,
+        likes: blog.likes + 1,
       }
     )
   }
