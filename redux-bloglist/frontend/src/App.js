@@ -1,26 +1,24 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import Main from './components/Main'
 import Blogs from './components/Blogs'
 import Blog from './components/Blog'
 import Users from './components/Users'
 import User from './components/User'
-import usersService from './services/users'
 import { initializeBlogs } from './reducers/blogReducer'
+import { initializeUsers } from './reducers/usersReducer'
 import { handleUser } from './reducers/userReducer'
 import blogService from './services/blogs'
 
 const App = () => {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user)
-    const [users, setUsers] = useState(null)
+    const users = useSelector((state) => state.users)
+
     useEffect(() => {
-        const fetchUsers = async () => {
-            const users = await usersService.getAll()
-            setUsers(users)
-        }
-        fetchUsers()
+        dispatch(initializeBlogs())
+        dispatch(initializeUsers())
     }, [])
 
     useEffect(() => {
@@ -32,9 +30,6 @@ const App = () => {
         }
     }, [])
 
-    useEffect(() => {
-        dispatch(initializeBlogs())
-    }, [])
     return (
         <Router>
             <Main user={user} />
