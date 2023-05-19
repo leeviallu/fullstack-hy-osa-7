@@ -1,10 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { createBlog, removeBlog } from '../reducers/blogReducer'
 import BlogForm from './BlogForm'
-import Blog from './Blog'
 import Notification from './Notification'
 import Togglable from './Togglable'
 

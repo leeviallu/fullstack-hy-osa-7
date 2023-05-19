@@ -1,12 +1,17 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { modifyBlog } from '../reducers/blogReducer'
+import { useEffect } from 'react'
+import blogsService from '../services/blogs'
+import { useState } from 'react'
 
 const Blog = () => {
     const dispatch = useDispatch()
     const blogs = useSelector((state) => state.blogs)
     const id = useParams().id
     const blog = blogs.find((blog) => blog.id === id)
+    const [comments, setComments] = useState(null)
+
     const addBlogLikes = () => {
         const blogObject = {
             ...blog,
@@ -14,6 +19,13 @@ const Blog = () => {
         }
         dispatch(modifyBlog(blog.id, blogObject))
     }
+    useEffect(() => {
+        const fetchComments = async () => {
+            const comments = await blogsService.getComments(id)
+            setComments(comments)
+        }
+        fetchComments()
+    }, [])
 
     return (
         <div>
@@ -28,6 +40,14 @@ const Blog = () => {
                         <button onClick={addBlogLikes}>like</button>
                     </p>
                     <p>added by {blog.author}</p>
+                    <h3>comments</h3>
+                    <ul>
+                        {comments
+                            ? comments.map((comment) => (
+                                  <li key={comment.id}>{comment.title}</li>
+                              ))
+                            : null}
+                    </ul>
                 </div>
             ) : null}
         </div>
