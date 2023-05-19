@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import Main from './components/Main'
 import Blogs from './components/Blogs'
+import Blog from './components/Blog'
 import Users from './components/Users'
 import User from './components/User'
 import usersService from './services/users'
+import { initializeBlogs } from './reducers/blogReducer'
 import { handleUser } from './reducers/userReducer'
 import blogService from './services/blogs'
 
@@ -29,12 +31,17 @@ const App = () => {
             blogService.setToken(user.token)
         }
     }, [])
+
+    useEffect(() => {
+        dispatch(initializeBlogs())
+    }, [])
     return (
         <Router>
             <Main user={user} />
             {user ? (
                 <Routes>
                     <Route path="/blogs" element={<Blogs />} />
+                    <Route path="/blogs/:id" element={<Blog />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="/users/:id" element={<User users={users} />} />
                 </Routes>

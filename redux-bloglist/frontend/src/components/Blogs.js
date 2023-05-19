@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import {
@@ -13,13 +14,9 @@ import Notification from './Notification'
 import Togglable from './Togglable'
 
 const Blogs = () => {
-    const dispatch = useDispatch()
-    const notification = useSelector((state) => state).notification
+    const notification = useSelector((state) => state.notification)
     const blogs = useSelector((state) => state.blogs)
     const user = useSelector((state) => state.user)
-    useEffect(() => {
-        dispatch(initializeBlogs())
-    }, [])
 
     const addBlog = async (blogObject) => {
         blogFormRef.current.toggleVisibility()
@@ -32,13 +29,11 @@ const Blogs = () => {
         )
     }
 
-    const addBlogLikes = async (id, blogObject) => {
-        dispatch(modifyBlog(id, blogObject))
-    }
-
-    const deleteBlog = async (id) => {
-        dispatch(removeBlog(id))
-        window.location.reload()
+    const deleteBlog = async (blog) => {
+        if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+            dispatch(removeBlog(blog.id))
+            window.location.reload()
+        }
     }
     const blogFormRef = useRef()
 
@@ -52,14 +47,17 @@ const Blogs = () => {
                     </Togglable>
                     {[...blogs]
                         .sort((blog1, blog2) => blog2.likes - blog1.likes)
-                        .map((blog, i) => (
-                            <Blog
-                                key={i}
-                                blog={blog}
-                                updateBlog={addBlogLikes}
-                                deleteBlog={deleteBlog}
-                                user={user}
-                            />
+                        .map((blog) => (
+                            <div key={blog.id}>
+                                <Link to={`/blogs/${blog.id}`}>
+                                    {blog.title}
+                                </Link>
+                                {user.username === blog.user.username ? (
+                                    <button onClick={() => deleteBlog(blog)}>
+                                        delete
+                                    </button>
+                                ) : null}
+                            </div>
                         ))}
                 </div>
             ) : null}
