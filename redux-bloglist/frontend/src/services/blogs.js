@@ -41,7 +41,7 @@ const getComments = async (id) => {
     return response.data
 }
 
-const createComment = async (id, comment) => {
+const newComment = async (id, comment) => {
     const response = await axios.post(`${baseUrl}/${id}/comments`, comment)
     return response.data
 }
@@ -53,5 +53,5 @@ export default {
     remove,
     setToken,
     getComments,
-    createComment,
+    newComment,
 }

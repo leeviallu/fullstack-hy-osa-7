@@ -1,26 +1,22 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { modifyBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { useEffect } from 'react'
-import blogsService from '../services/blogs'
 import { useState } from 'react'
+import { createComment, initializeComments } from '../reducers/commentsReducer'
 
 const Blog = () => {
     const dispatch = useDispatch()
     const blogs = useSelector((state) => state.blogs)
+    const comments = useSelector((state) => state.comments)
     const id = useParams().id
+    const filteredComments = comments.filter((comment) => comment.blog === id)
     const blog = blogs.find((blog) => blog.id === id)
-    const [comments, setComments] = useState(null)
+    const [newCommentTitle, setNewCommentTitle] = useState('')
 
     useEffect(() => {
-        const fetchComments = async () => {
-            const comments = await blogsService.getComments(id)
-            const newComments = comments.filter(
-                (comment) => comment.blog === id
-            )
-            setComments(newComments)
-        }
-        fetchComments()
+        dispatch(initializeComments())
     }, [])
 
     const addBlogLikes = () => {
@@ -29,6 +25,13 @@ const Blog = () => {
             likes: blog.likes + 1,
         }
         dispatch(modifyBlog(blog.id, blogObject))
+    }
+
+    const addComment = async () => {
+        const commentObject = {
+            title: newCommentTitle,
+        }
+        dispatch(createComment(id, commentObject))
     }
 
     return (
@@ -45,9 +48,19 @@ const Blog = () => {
                     </p>
                     <p>added by {blog.author}</p>
                     <h3>comments</h3>
+                    <form onSubmit={addComment}>
+                        comment:
+                        <input
+                            value={newCommentTitle}
+                            onChange={(event) =>
+                                setNewCommentTitle(event.target.value)
+                            }
+                        />
+                        <button type="submit">save</button>
+                    </form>
                     <ul>
-                        {comments
-                            ? comments.map((comment) => (
+                        {filteredComments
+                            ? filteredComments.map((comment) => (
                                   <li key={comment.id}>{comment.title}</li>
                               ))
                             : null}
