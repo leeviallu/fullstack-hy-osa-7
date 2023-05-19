@@ -30,23 +30,16 @@ const App = () => {
         }
     }, [])
     return (
-        <div>
+        <Router>
+            <Header user={user} />
             {user ? (
-                <Router>
-                    <Header user={user} />
-                    <Routes>
-                        <Route path="/blogs" element={<Home />} />
-                        <Route path="/users" element={<Users />} />
-                        <Route
-                            path="/users/:id"
-                            element={<User users={users} />}
-                        />
-                    </Routes>
-                </Router>
-            ) : (
-                <Header user={user} />
-            )}
-        </div>
+                <Routes>
+                    <Route path="/blogs" element={<Home />} />
+                    <Route path="/users" element={<Users />} />
+                    <Route path="/users/:id" element={<User users={users} />} />
+                </Routes>
+            ) : null}
+        </Router>
     )
 }
 
