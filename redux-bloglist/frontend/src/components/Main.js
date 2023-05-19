@@ -7,7 +7,7 @@ import loginService from '../services/login'
 
 import LoginForm from './LoginForm'
 
-const Header = ({ user }) => {
+const Main = ({ user }) => {
     const dispatch = useDispatch()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -68,4 +68,4 @@ const Header = ({ user }) => {
     )
 }
 
-export default Header
+export default Main

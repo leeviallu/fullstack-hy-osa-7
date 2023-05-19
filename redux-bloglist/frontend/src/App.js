@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
-import Header from './components/Header'
-import Home from './components/Home'
+import Main from './components/Main'
+import Blogs from './components/Blogs'
 import Users from './components/Users'
 import User from './components/User'
 import usersService from './services/users'
@@ -31,10 +31,10 @@ const App = () => {
     }, [])
     return (
         <Router>
-            <Header user={user} />
+            <Main user={user} />
             {user ? (
                 <Routes>
-                    <Route path="/blogs" element={<Home />} />
+                    <Route path="/blogs" element={<Blogs />} />
                     <Route path="/users" element={<Users />} />
                     <Route path="/users/:id" element={<User users={users} />} />
                 </Routes>

@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import usersService from '../services/users'
 import { useEffect, useState } from 'react'
@@ -36,9 +35,7 @@ const Users = () => {
                         ))}
                     </ul>
                 </div>
-            ) : (
-                <div>lol</div>
-            )}
+            ) : null}
         </div>
     )
 }
