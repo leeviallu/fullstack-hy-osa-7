@@ -1,0 +1,7 @@
+.list-item {
+    float: left;
+    width: 50%;
+}
+.user-list {
+    list-style-type: none;
+}

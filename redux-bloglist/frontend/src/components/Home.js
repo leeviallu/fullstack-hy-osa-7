@@ -27,15 +27,6 @@ const Home = () => {
         dispatch(initializeBlogs())
     }, [])
 
-    useEffect(() => {
-        const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-        if (loggedUserJSON) {
-            const user = JSON.parse(loggedUserJSON)
-            dispatch(handleUser(user))
-            blogService.setToken(user.token)
-        }
-    }, [])
-
     const handleLogin = async (event) => {
         event.preventDefault()
         try {

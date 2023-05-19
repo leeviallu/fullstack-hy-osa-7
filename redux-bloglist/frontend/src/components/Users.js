@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import usersService from '../services/users'
 import { useEffect, useState } from 'react'
+import './Users.css'
 
 const Users = () => {
     const [users, setUsers] = useState(null)
@@ -12,23 +13,24 @@ const Users = () => {
         }
         fetchUsers()
     }, [])
-    console.log(users)
     return (
         <div>
             {users ? (
                 <div>
                     <h1>Users</h1>
-                    <ul>
-                        <li>blogs created</li>
+                    <ul className="user-list">
+                        <li className="list-item">user</li>
+                        <li className="list-item">blogs created</li>
                         {users.map((user) => (
                             <div key={user.id}>
                                 <div>
                                     <Link to={`/users/${user.id}`}>
-                                        {user.username}
+                                        <li className="list-item">
+                                            {user.username}
+                                        </li>
                                     </Link>
-                                    <ul>
-                                        <li>{user.blogs.length}</li>
-                                    </ul>
+
+                                    <li>{user.blogs.length}</li>
                                 </div>
                             </div>
                         ))}

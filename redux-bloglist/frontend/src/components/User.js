@@ -8,7 +8,7 @@ const User = ({ users }) => {
     const user = users.find((user) => user.id === id)
     return (
         <div>
-            <h1>{user.name}</h1>
+            <h1>{user.username}</h1>
             <h2>added blogs</h2>
             <ul>
                 {user.blogs.map((blog) => (
