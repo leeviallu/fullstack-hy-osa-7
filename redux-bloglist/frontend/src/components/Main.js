@@ -5,6 +5,7 @@ import { setNotification } from '../reducers/notificationReducer'
 import blogService from '../services/blogs'
 import loginService from '../services/login'
 
+import { Link } from 'react-router-dom'
 import LoginForm from './LoginForm'
 
 const Main = ({ user }) => {
@@ -34,11 +35,12 @@ const Main = ({ user }) => {
         <div>
             {user ? (
                 <div>
-                    <h2>blogs</h2>
-                    <p>
-                        {user.name} logged in
-                        <br />
-                        <br />
+                    <div style={{ backgroundColor: 'lightblue' }}>
+                        <Link to={`/users`}>users</Link>
+                        &nbsp;
+                        <Link to={`/blogs`}>blogs</Link>
+                        &nbsp;
+                        {user.name} logged in &nbsp;
                         <button
                             onClick={() => {
                                 window.localStorage.removeItem(
@@ -49,7 +51,8 @@ const Main = ({ user }) => {
                         >
                             log out
                         </button>
-                    </p>
+                    </div>
+                    <h2>blog app</h2>
                 </div>
             ) : (
                 <LoginForm
