@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { createBlog, removeBlog } from '../reducers/blogReducer'
 import BlogForm from './BlogForm'
@@ -8,6 +8,7 @@ import Notification from './Notification'
 import Togglable from './Togglable'
 
 const Blogs = () => {
+    const dispatch = useDispatch()
     const notification = useSelector((state) => state.notification)
     const blogs = useSelector((state) => state.blogs)
     const user = useSelector((state) => state.user)

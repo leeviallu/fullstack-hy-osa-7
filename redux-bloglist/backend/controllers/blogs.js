@@ -62,9 +62,10 @@ blogsRouter.put("/:id", async (request, response) => {
 });
 
 blogsRouter.post("/:id/comments", async (request, response) => {
-    const { body } = request;
+    const { params, body } = request;
     const comment = new Comment({
         title: body.title,
+        blog: params.id,
     });
     const savedComment = await comment.save();
 

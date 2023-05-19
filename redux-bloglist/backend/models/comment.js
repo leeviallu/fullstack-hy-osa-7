@@ -8,6 +8,11 @@ const commentSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    blog: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Blog",
+        required: true,
+    },
 });
 
 commentSchema.set("toJSON", {

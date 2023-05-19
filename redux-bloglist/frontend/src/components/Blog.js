@@ -12,6 +12,17 @@ const Blog = () => {
     const blog = blogs.find((blog) => blog.id === id)
     const [comments, setComments] = useState(null)
 
+    useEffect(() => {
+        const fetchComments = async () => {
+            const comments = await blogsService.getComments(id)
+            const newComments = comments.filter(
+                (comment) => comment.blog === id
+            )
+            setComments(newComments)
+        }
+        fetchComments()
+    }, [])
+
     const addBlogLikes = () => {
         const blogObject = {
             ...blog,
@@ -19,13 +30,6 @@ const Blog = () => {
         }
         dispatch(modifyBlog(blog.id, blogObject))
     }
-    useEffect(() => {
-        const fetchComments = async () => {
-            const comments = await blogsService.getComments(id)
-            setComments(comments)
-        }
-        fetchComments()
-    }, [])
 
     return (
         <div>
